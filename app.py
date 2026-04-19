@@ -120,6 +120,22 @@ conversion = (total_100s / (total_50s + total_100s)) * 100 if (total_50s + total
 st.metric("Conversion Rate (50 → 100)", f"{conversion:.1f}%")
 
 # -----------------------------
+# 11. CENTURIES AGAINST OPPONENTS
+# -----------------------------
+st.subheader("🏏 Centuries Against Opponents")
+
+centuries = df[df['Runs'] >= 100]
+
+centuries_count = centuries.groupby('Opponent').size().sort_values(ascending=False)
+
+plt.figure()
+centuries_count.plot(kind='bar')
+plt.xlabel("Opponent")
+plt.ylabel("Number of Centuries")
+plt.xticks(rotation=45)
+st.pyplot(plt)
+
+# -----------------------------
 # 8. BOWLER MATCHUP ANALYSIS
 # -----------------------------
 st.subheader("🏏 Performance Against Bowlers (Key Insights)")
