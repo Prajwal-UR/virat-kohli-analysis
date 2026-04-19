@@ -74,7 +74,7 @@ st.metric("Consistency Score", round(consistency, 2))
 # -----------------------------
 # 4. PERFORMANCE AGAINST TEAMS
 # -----------------------------
-st.subheader("🆚 Performance Against Different Teams")
+st.subheader("🆚 Performance Against Different Teams(Avg Runs Scored)")
 
 opp = df.groupby('Opponent')['Runs'].mean().sort_values(ascending=False)
 
