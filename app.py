@@ -15,7 +15,6 @@ with col1:
 
 with col2:
     st.title("Virat Kohli ODI Performance Dashboard 🏏")
-
 # -----------------------------
 # LOAD DATA
 # -----------------------------
