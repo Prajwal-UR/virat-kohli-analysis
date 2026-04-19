@@ -97,15 +97,27 @@ st.bar_chart(venue)
 # -----------------------------
 st.subheader("🎯 Batting Style Breakdown")
 
-shots = {
-    'Singles': df['Singles'].sum(),
-    'Fours': df['Fours'].sum(),
-    'Sixes': df['Sixes'].sum()
-}
+# Calculate totals
+singles = df['Singles'].sum()
+doubles = df['Doubles'].sum()
+triples = df['Triples'].sum()
+fours = df['Fours'].sum()
+sixes = df['Sixes'].sum()
 
+total_runs = singles + doubles + triples + fours + sixes
+
+labels = ['Singles', 'Doubles', 'Triples', 'Fours', 'Sixes']
+values = [singles, doubles, triples, fours, sixes]
+
+# Pie chart
 plt.figure()
-plt.pie(shots.values(), labels=shots.keys(), autopct='%1.1f%%')
+plt.pie(values, labels=labels, autopct='%1.1f%%')
+plt.title("Run Distribution by Shot Type")
+
 st.pyplot(plt)
+
+# 👉 ADD THIS (IMPORTANT)
+st.markdown(f"**Total Runs from Shots: {total_runs}**")
 
 # -----------------------------
 # 7. CONVERSION ABILITY
