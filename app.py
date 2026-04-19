@@ -196,13 +196,37 @@ with col2:
     st.dataframe(easy[['Bowler','avg_numeric','runs_scored']])
 
 # Scatter
-st.subheader("📊 Average vs Strike Rate")
+# -----------------------------
+# 📊 SCORE DISTRIBUTION (PERFORMANCE LEVEL)
+# -----------------------------
+st.subheader("📊 Score Distribution by Performance Level")
 
-plt.figure()
-plt.scatter(bowler['avg_numeric'], bowler['strike_rate'])
-plt.xlabel("Average")
-plt.ylabel("Strike Rate")
+# Create categories
+low = df[df['Runs'] < 30].shape[0]
+medium = df[(df['Runs'] >= 30) & (df['Runs'] < 50)].shape[0]
+good = df[(df['Runs'] >= 50) & (df['Runs'] < 100)].shape[0]
+excellent = df[df['Runs'] >= 100].shape[0]
+
+labels = ['Low (<30)', 'Medium (30-50)', 'Good (50-100)', 'Excellent (100+)']
+values = [low, medium, good, excellent]
+
+# Plot
+plt.figure(figsize=(8,5))
+plt.bar(labels, values)
+
+plt.title("Score Distribution Categories")
+plt.xlabel("Performance Type")
+plt.ylabel("Matches")
+
+plt.grid(axis='y', alpha=0.3)
+
 st.pyplot(plt)
+
+# -----------------------------
+# INSIGHT
+# -----------------------------
+best_category = labels[values.index(max(values))]
+st.info(f"Most innings fall under: **{best_category}**")
 
 # -----------------------------
 # 9. PERFORMANCE BY YEAR
