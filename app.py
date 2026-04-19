@@ -7,11 +7,11 @@ st.set_page_config(layout="wide")
 # -----------------------------
 # HEADER (IMAGE + TITLE)
 # -----------------------------
-col1, col2 = st.columns([1.5, 5])
+col1, col2 = st.columns([4, 6])   # give much more space to image
 
 with col1:
-    st.markdown("<br><br>", unsafe_allow_html=True)  # pushes image down
-    st.image("virat.jpg", width=160)
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.image("virat.jpg", use_container_width=True)
 
 with col2:
     st.title("Virat Kohli ODI Performance Dashboard 🏏")
