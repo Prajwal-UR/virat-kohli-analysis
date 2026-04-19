@@ -7,13 +7,13 @@ st.set_page_config(layout="wide")
 # -----------------------------
 # HEADER (IMAGE + TITLE)
 # -----------------------------
-col1, col2 = st.columns([1, 5])
+col1, col2 = st.columns([1.5, 5])
 
 with col1:
-    st.image("virat.jpg", width=120)
+    st.image("virat.jpg", width=160)  # increased size
 
 with col2:
-    st.title("🏏 Virat Kohli ODI Performance Dashboard")
+    st.title("Virat Kohli ODI Performance Dashboard 🏏")
 
 # -----------------------------
 # LOAD DATA
