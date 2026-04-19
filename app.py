@@ -238,6 +238,38 @@ yearly = df.groupby(df['Date'].dt.year)['Runs'].sum()
 st.line_chart(yearly)
 
 # -----------------------------
+# 📅 YEAR-WISE PERFORMANCE (DETAILED)
+# -----------------------------
+st.subheader("📅 Year-wise Runs (Career Progression)")
+
+yearly = df.groupby(df['Date'].dt.year)['Runs'].sum()
+
+plt.figure(figsize=(10,5))
+bars = plt.bar(yearly.index, yearly.values)
+
+plt.title("Year-wise Runs (Career Progression)")
+plt.xlabel("Year")
+plt.ylabel("Total Runs")
+
+plt.grid(axis='y', alpha=0.3)
+
+# Add values on top of bars
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2, height + 20, 
+             int(height), ha='center')
+
+st.pyplot(plt)
+
+# -----------------------------
+# INSIGHT (SMART ADDITION)
+# -----------------------------
+best_year = yearly.idxmax()
+best_runs = yearly.max()
+
+st.info(f"Peak performance year: **{best_year}** with **{best_runs} runs**")
+
+# -----------------------------
 # 10. BEST PERFORMANCES
 # -----------------------------
 st.subheader("🔥 Best Performances (Top Innings)")
