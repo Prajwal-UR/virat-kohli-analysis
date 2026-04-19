@@ -4,7 +4,16 @@ import matplotlib.pyplot as plt
 
 st.set_page_config(layout="wide")
 
-st.title("🏏 Virat Kohli ODI Performance Dashboard")
+# -----------------------------
+# HEADER (IMAGE + TITLE)
+# -----------------------------
+col1, col2 = st.columns([1, 5])
+
+with col1:
+    st.image("virat.jpg", width=120)
+
+with col2:
+    st.title("🏏 Virat Kohli ODI Performance Dashboard")
 
 # -----------------------------
 # LOAD DATA
@@ -26,21 +35,21 @@ if year != "All":
     df = df[df['Date'].dt.year == year]
 
 # -----------------------------
-# 1️⃣ OVERVIEW (KPIs)
+# 1. OVERALL PERFORMANCE SUMMARY
 # -----------------------------
-st.subheader("📊 Overview")
+st.subheader("📊 Overall Performance Summary")
 
 col1, col2, col3, col4 = st.columns(4)
 
 col1.metric("Total Runs", int(df['Runs'].sum()))
-col2.metric("Matches", df.shape[0])
-col3.metric("Average", round(df['Runs'].mean(), 2))
+col2.metric("Matches Played", df.shape[0])
+col3.metric("Batting Average", round(df['Runs'].mean(), 2))
 col4.metric("Strike Rate", round(df['StrikeRate'].mean(), 2))
 
 # -----------------------------
-# 2️⃣ CAREER PROGRESSION
+# 2. CAREER GROWTH OVER TIME
 # -----------------------------
-st.subheader("📈 Career Progression")
+st.subheader("📈 Career Growth Over Time")
 
 plt.figure()
 plt.plot(df['Date'], df['Runs'])
@@ -48,9 +57,9 @@ plt.xticks(rotation=45)
 st.pyplot(plt)
 
 # -----------------------------
-# 3️⃣ FORM & CONSISTENCY
+# 3. CURRENT FORM & STABILITY
 # -----------------------------
-st.subheader("📉 Form & Consistency")
+st.subheader("📉 Current Form & Stability")
 
 df['rolling_avg'] = df['Runs'].rolling(10).mean()
 
@@ -63,9 +72,9 @@ consistency = df['Runs'].mean() / df['Runs'].std()
 st.metric("Consistency Score", round(consistency, 2))
 
 # -----------------------------
-# 4️⃣ OPPONENT ANALYSIS
+# 4. PERFORMANCE AGAINST TEAMS
 # -----------------------------
-st.subheader("🆚 Opponent Analysis")
+st.subheader("🆚 Performance Against Different Teams")
 
 opp = df.groupby('Opponent')['Runs'].mean().sort_values(ascending=False)
 
@@ -75,18 +84,18 @@ plt.xticks(rotation=45)
 st.pyplot(plt)
 
 # -----------------------------
-# 5️⃣ VENUE ANALYSIS
+# 5. PERFORMANCE ACROSS STADIUMS
 # -----------------------------
-st.subheader("🏟️ Venue Analysis")
+st.subheader("🏟️ Performance Across Stadiums")
 
 venue = df.groupby('Venue')['Runs'].mean().sort_values(ascending=False)
 
 st.bar_chart(venue)
 
 # -----------------------------
-# 6️⃣ PLAYING STYLE
+# 6. BATTING STYLE BREAKDOWN
 # -----------------------------
-st.subheader("🎯 Playing Style")
+st.subheader("🎯 Batting Style Breakdown")
 
 shots = {
     'Singles': df['Singles'].sum(),
@@ -99,9 +108,9 @@ plt.pie(shots.values(), labels=shots.keys(), autopct='%1.1f%%')
 st.pyplot(plt)
 
 # -----------------------------
-# 7️⃣ CONVERSION RATE
+# 7. CONVERSION ABILITY
 # -----------------------------
-st.subheader("🎯 Conversion Ability")
+st.subheader("🎯 Ability to Convert Starts into Big Scores")
 
 total_50s = df['50s'].sum()
 total_100s = df['100s'].sum()
@@ -111,9 +120,9 @@ conversion = (total_100s / (total_50s + total_100s)) * 100 if (total_50s + total
 st.metric("Conversion Rate (50 → 100)", f"{conversion:.1f}%")
 
 # -----------------------------
-# 8️⃣ BOWLER MATCHUPS
+# 8. BOWLER MATCHUP ANALYSIS
 # -----------------------------
-st.subheader("🏏 Bowler Matchups")
+st.subheader("🏏 Performance Against Bowlers (Key Insights)")
 
 tough = bowler[
     (bowler['balls_faced'] > 30) &
@@ -136,8 +145,8 @@ with col2:
     st.write("💪 Dominated Bowlers")
     st.dataframe(easy[['Bowler','avg_numeric','runs_scored']])
 
-# Scatter plot
-st.subheader("📊 Avg vs Strike Rate")
+# Scatter
+st.subheader("📊 Average vs Strike Rate")
 
 plt.figure()
 plt.scatter(bowler['avg_numeric'], bowler['strike_rate'])
@@ -146,18 +155,18 @@ plt.ylabel("Strike Rate")
 st.pyplot(plt)
 
 # -----------------------------
-# 9️⃣ YEAR-WISE PERFORMANCE
+# 9. PERFORMANCE BY YEAR
 # -----------------------------
-st.subheader("📅 Year-wise Runs")
+st.subheader("📅 Performance by Year")
 
 yearly = df.groupby(df['Date'].dt.year)['Runs'].sum()
 
 st.line_chart(yearly)
 
 # -----------------------------
-# 🔟 TOP PERFORMANCES
+# 10. BEST PERFORMANCES
 # -----------------------------
-st.subheader("🔥 Top Performances")
+st.subheader("🔥 Best Performances (Top Innings)")
 
 top_scores = df.sort_values(by='Runs', ascending=False).head(10)
 
