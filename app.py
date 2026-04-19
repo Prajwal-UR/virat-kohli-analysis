@@ -96,6 +96,7 @@ st.bar_chart(venue)
 # 6. BATTING STYLE BREAKDOWN
 # -----------------------------
 # -----------------------------
+# -----------------------------
 # 🎯 BATTING STYLE BREAKDOWN
 # -----------------------------
 st.subheader("🎯 Batting Style Breakdown")
@@ -107,56 +108,40 @@ triples = df['Triples'].sum()
 fours = df['Fours'].sum()
 sixes = df['Sixes'].sum()
 
-total_runs = singles + doubles + triples + fours + sixes
-
 labels = ['Singles', 'Doubles', 'Triples', 'Fours', 'Sixes']
 values = [singles, doubles, triples, fours, sixes]
 
+total_runs = sum(values)
+
 # -----------------------------
-# PIE CHART (PERCENTAGE VIEW)
+# BAR CHART (MAIN VISUAL)
 # -----------------------------
-st.write("### Run Distribution (Percentage)")
+shot_df = pd.DataFrame({
+    'Shot Type': labels,
+    'Runs': values
+})
 
-plt.figure(figsize=(10,6))
-
-explode = [0, 0.05, 0.08, 0, 0]  # highlight small slices
-
-plt.pie(
-    values,
-    labels=labels,
-    autopct='%1.1f%%',
-    startangle=90,
-    explode=explode
-)
+plt.figure(figsize=(10,5))
+plt.bar(shot_df['Shot Type'], shot_df['Runs'])
 
 plt.title("Run Distribution by Shot Type")
-plt.tight_layout()
+plt.xlabel("Shot Type")
+plt.ylabel("Runs")
+
+plt.grid(axis='y', alpha=0.3)
 
 st.pyplot(plt)
 
 # -----------------------------
-# BAR CHART (CLEAR COMPARISON)
-# -----------------------------
-st.write("### Run Contribution (Absolute Values)")
-
-shot_df = pd.DataFrame({
-    'Shot': labels,
-    'Runs': values
-})
-
-st.bar_chart(shot_df.set_index('Shot'))
-
-# -----------------------------
-# TOTAL RUNS DISPLAY
+# TOTAL RUNS
 # -----------------------------
 st.markdown(f"**Total Runs from Shots: {total_runs}**")
 
 # -----------------------------
-# INSIGHT (SMART ADDITION)
+# INSIGHT
 # -----------------------------
 top_shot = labels[values.index(max(values))]
 st.info(f"Most runs are scored through: **{top_shot}**")
-# -----------------------------
 # 7. CONVERSION ABILITY
 # -----------------------------
 st.subheader("🎯 Ability to Convert Starts into Big Scores")
