@@ -95,6 +95,9 @@ st.bar_chart(venue)
 # -----------------------------
 # 6. BATTING STYLE BREAKDOWN
 # -----------------------------
+# -----------------------------
+# 🎯 BATTING STYLE BREAKDOWN
+# -----------------------------
 st.subheader("🎯 Batting Style Breakdown")
 
 # Calculate totals
@@ -109,16 +112,50 @@ total_runs = singles + doubles + triples + fours + sixes
 labels = ['Singles', 'Doubles', 'Triples', 'Fours', 'Sixes']
 values = [singles, doubles, triples, fours, sixes]
 
-# Pie chart
-plt.figure()
-plt.pie(values, labels=labels, autopct='%1.1f%%')
+# -----------------------------
+# PIE CHART (PERCENTAGE VIEW)
+# -----------------------------
+st.write("### Run Distribution (Percentage)")
+
+plt.figure(figsize=(10,6))
+
+explode = [0, 0.05, 0.08, 0, 0]  # highlight small slices
+
+plt.pie(
+    values,
+    labels=labels,
+    autopct='%1.1f%%',
+    startangle=90,
+    explode=explode
+)
+
 plt.title("Run Distribution by Shot Type")
+plt.tight_layout()
 
 st.pyplot(plt)
 
-# 👉 ADD THIS (IMPORTANT)
+# -----------------------------
+# BAR CHART (CLEAR COMPARISON)
+# -----------------------------
+st.write("### Run Contribution (Absolute Values)")
+
+shot_df = pd.DataFrame({
+    'Shot': labels,
+    'Runs': values
+})
+
+st.bar_chart(shot_df.set_index('Shot'))
+
+# -----------------------------
+# TOTAL RUNS DISPLAY
+# -----------------------------
 st.markdown(f"**Total Runs from Shots: {total_runs}**")
 
+# -----------------------------
+# INSIGHT (SMART ADDITION)
+# -----------------------------
+top_shot = labels[values.index(max(values))]
+st.info(f"Most runs are scored through: **{top_shot}**")
 # -----------------------------
 # 7. CONVERSION ABILITY
 # -----------------------------
