@@ -49,7 +49,7 @@ col4.metric("Strike Rate", round(df['StrikeRate'].mean(), 2))
 # -----------------------------
 # 2. CAREER GROWTH OVER TIME
 # -----------------------------
-st.subheader("📈 Career Growth Over Time")
+st.subheader("📈 Career Growth(Runs Scored Over Time)")
 
 plt.figure()
 plt.plot(df['Date'], df['Runs'])
