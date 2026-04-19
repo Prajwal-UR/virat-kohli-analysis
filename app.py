@@ -7,7 +7,7 @@ st.set_page_config(layout="wide")
 # -----------------------------
 # HEADER (IMAGE + TITLE)
 # -----------------------------
-col1, col2 = st.columns([1.5, 5])
+col1, col2 = st.columns([2, 5])
 
 with col1:
     st.image("virat.jpg", width=160)  # increased size
